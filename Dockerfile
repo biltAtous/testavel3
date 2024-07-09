@@ -21,6 +21,15 @@ RUN chown -R www-data:www-data /var/www/app \
     && chmod -R 775 /var/www/app/storage
 
 
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install extensions
+RUN docker-php-ext-install pdo_mysql zip exif pcntl
+RUN docker-php-ext-install gd
+
+
+
 # install composer
 COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
 
