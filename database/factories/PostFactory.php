@@ -17,9 +17,10 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->realText(170),
-            'description' =>fake()->realText(1200),
-            'image_path' => 'storage/app/public/placeholder.png'
+            'title' => fake()->realText(70),
+            'description' =>fake()->realText(120),
+            'image_path' => 'placeholder.png', //hardcoded
+            'user_id' => 1 //hardcoded
         ];
     }
 }
