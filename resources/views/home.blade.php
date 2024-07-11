@@ -1,7 +1,5 @@
 <x-layout>
-
-    <section class="p-8 max-w-[1280px] mx-auto">
+    <section class="">
         <h1 class="text-2xl">Homepage</h1>
     </section>  
-
 </x-layout>

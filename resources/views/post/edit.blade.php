@@ -1,18 +1,15 @@
 <x-layout>
-    <section class="p-8 mx-auto max-w-[1280px]">
-        <div class="flex flex-col gap-4">
-            <h1 class="text-xl">Edit Post, id:{{ $post->id }}</h1>
+    <section class="flex flex-col gap-4">
+        <h1 class="text-xl">Edit Post, id:{{ $post->id }}</h1>
 
-            <form action="{{ route('posts.update', $post) }}" method="POST" class="flex flex-col justify-start gap-2" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <input type="text" placeholder="title..." name="title" class="border" value="{{ $post->title }}" />
-                <textarea rows="4" name="description" class="border" placeholder="description...">{{ $post->description }}</textarea>
-                <img class="max-w-sm" src="{{ url( 'storage/' . $post->image_path) }}" alt="image">
-                <input type="file" name="image_path" accept="image/png, image/jpg, image/jpeg" />
-                <button class="cursor-pointer self-start border px-4 py-2">Update</button>
-            </form>
-
-        </div>
+        <form action="{{ route('posts.update', $post) }}" method="POST" class="flex flex-col justify-start gap-2" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="text" placeholder="title..." name="title" class="border" value="{{ $post->title }}" />
+            <textarea rows="4" name="description" class="border" placeholder="description...">{{ $post->description }}</textarea>
+            <img class="max-w-sm" src="{{ url( 'storage/' . $post->image_path) }}" alt="image">
+            <input type="file" name="image_path" accept="image/png, image/jpg, image/jpeg" />
+            <button class="cursor-pointer self-start border px-4 py-2">Update</button>
+        </form>
     </section>
 </x-layout>

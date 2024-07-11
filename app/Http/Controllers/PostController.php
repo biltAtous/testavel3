@@ -44,7 +44,7 @@ class PostController extends Controller
         ]);
         
         $image_file = $request->file('image_path');
-        $image_name = $image_file->getClientOriginalName();
+        $image_name = time().'-'.$image_file->getClientOriginalName();
 
         Storage::disk('public')->putFileAs('', $image_file, $image_name);
         
@@ -89,7 +89,7 @@ class PostController extends Controller
         
         if($request->file('image_path')){
             $image_file = $request->file('image_path');
-            $image_name = $image_file->getClientOriginalName();
+            $image_name = time().'-'.$image_file->getClientOriginalName();
     
             Storage::disk('public')->putFileAs('', $image_file, $image_name);
             $post_data['image_path'] = $image_name;
@@ -110,6 +110,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $file_name = $post->image_path;
+        
+        if(Storage::disk('public')->exists($file_name)){
+            Storage::disk('public')->delete($file_name);
+        }
+
+        $post->delete();
+        return to_route('posts.index')->with('message', 'Post was deleted');
     }
 }
