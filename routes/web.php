@@ -14,14 +14,15 @@ Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
 
 //admin
 //login
-Route::get('/admin/login', [AdminController::class, 'login'])->name('login');
-Route::post('/admin/login', [AdminController::class, 'login_post'])->name('login.post');
+Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'login_post'])->name('admin.login_post');
 
 //register
-Route::get('/admin/register', [AdminController::class, 'register'])->name('register');
-Route::post('/admin/register', [AdminController::class, 'register_post'])->name('register.post');
+Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
+Route::post('/admin', [AdminController::class, 'register_post'])->name('admin.register_post');
 
-
+//logout
+Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 
 //posts

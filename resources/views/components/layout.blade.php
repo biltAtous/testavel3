@@ -17,10 +17,20 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="p-8 mx-auto max-w-[1280px]">
-        <nav class="w-full flex flex-row flex-wrap gap-4 p-4 bg-gray-200 my-6">
-            <a href="/">Home</a>
-            <a href="/posts">Posts</a>
-            <a href="/posts/create">Add Post</a>
+        <nav class="w-full flex flex-row flex-wrap justify-between p-4 bg-gray-200 my-6">
+            <div class="flex flex-row gap-4">
+                <a href="/">Home</a>
+                <a href="/posts">Posts</a>
+                <a href="/posts/create">Add Post</a>
+            </div>
+            <div>
+            @if(Auth::user())
+                <a href="{{ route('admin.logout') }}">Logout</a>
+            @else
+                <a href="{{ route('admin.login') }}">Login</a>   
+            </div>
+            @endif
+
         </nav>
         @session('message')
         <div class="w-full p-2 bg-gray-400">
