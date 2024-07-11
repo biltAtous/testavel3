@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,6 +15,12 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::query()->orderBy('created_at', 'desc')->get();
+
+        foreach($posts as $post){
+            $user = User::find($post->user_id);
+            $post->user = $user;
+        }
+
         return view('post.index', ['posts' => $posts]);
     }
 
@@ -33,24 +40,14 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string'],
             'description' => 'string',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:24'
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240' //10MB
         ]);
-
-        // dd($request->image_path);
-        // $image_name = time().'.'.$request->image_path->extension();
-        // $request->file('image_path')->move(public_path(''), $request->image_path);
         
         $image_file = $request->file('image_path');
         $image_name = $image_file->getClientOriginalName();
 
-        // $image_file->move(base_path('images'), $image_name);
-
         Storage::disk('public')->putFileAs('', $image_file, $image_name);
         
-        
-        // $request->image_path->move(public_path(), $request->image_path);
-
-        // $image = $request->file();
 
         $post_data['title'] = $request->title;
         $post_data['description'] = $request->description;
@@ -59,6 +56,7 @@ class PostController extends Controller
 
         $new_post = Post::create($post_data);
 
+        //todo message if validation is not successful
         return to_route('posts.index', $new_post)->with('message', 'Added');
     }
 
@@ -75,7 +73,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('post.edit', ['post' => $post]);    
     }
 
     /**
@@ -83,7 +81,28 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string'],
+            'description' => 'string',
+            'image_path' => 'image|mimes:jpeg,png,jpg,gif|max:10240' //10MB
+        ]);
+        
+        if($request->file('image_path')){
+            $image_file = $request->file('image_path');
+            $image_name = $image_file->getClientOriginalName();
+    
+            Storage::disk('public')->putFileAs('', $image_file, $image_name);
+            $post_data['image_path'] = $image_name;
+        }
+        
+
+        $post_data['title'] = $request->title;
+        $post_data['description'] = $request->description;
+
+        $post->update($post_data);
+
+        //todo message if validation is not successful
+        return to_route('posts.index', $post)->with('message', 'Updated');
     }
 
     /**

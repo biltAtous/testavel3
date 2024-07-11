@@ -1,5 +1,4 @@
 <x-layout>
-
     <section class="p-8 mx-auto max-w-[1280px]">
         <div class="flex flex-col gap-4">
             <h1 class="text-xl">Create New Note</h1>
@@ -14,5 +13,4 @@
 
         </div>
     </section>
-
 </x-layout>

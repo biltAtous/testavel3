@@ -17,7 +17,7 @@
 
                         <div class="grid border p-2">
                             <p class="text-md">
-                                Author ID: {{ $post->user_id }}
+                                Author: {{ $post->user->name }}
                             </p>
                             <p class="text-md">
                                 Published: {{ $post->created_at }}
