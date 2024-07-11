@@ -7,7 +7,6 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
-use Session;
 
 class AdminController extends Controller
 {
@@ -45,16 +44,6 @@ class AdminController extends Controller
 
         return to_route('admin.login', $user_object)->with('message', 'Wrong credentials!');
 
-        // $user = User::find($request->email);
-
-        // $user_email = $user->email;
-        // $user_password = $user->password;
-
-        // if($email == $user_email && $password == $user_password){
-        //     return to_route('admin.dashboard', $user_object)->with('message', 'Welcome!');
-
-        // }
-        // return to_route('admin.login', $user_object)->with('message', 'Wrong credentials!');
     }
 
     //register get, post
@@ -82,18 +71,16 @@ class AdminController extends Controller
         }
         
         $user_object = [];
-        $user_object['username'] = $username;
+        $user_object['name'] = $username;
         $user_object['email'] = $email;
         $user_object['password'] = $password;
 
         $user_object = User::create($user_object);
 
-        return to_route('admin.register_post', $user_object)->with('message', 'Welcome' . $username);
+        return to_route('admin.login', $user_object)->with('message', 'User created, please proceed to login!');
     
         
     }
-
-
 
     public function logout(Request $request){
         $data = array();

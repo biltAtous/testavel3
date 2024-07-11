@@ -19,15 +19,16 @@
                             Published: {{ $post->created_at }}
                         </p>
                     </div>
-                    <div class="flex flex-row gap-2">
-                        <a class="bg-blue-200 max-w-[80px] border p-2 font-medium" href="{{ route('posts.update', $post) }}/edit">Update</a>
-                        <form action="{{ route('posts.destroy', $post) }}" method="POST" class="max-w-[80px]">
-                            @csrf
-                            @method('DELETE')
-                            <button class="bg-red-200 max-w-[80px] border p-2 font-medium">Delete</button>
-                        </form>
-                    </div>
-
+                    @if(Auth::user())
+                        <div class="flex flex-row gap-2">
+                            <a class="bg-blue-200 max-w-[80px] border p-2 font-medium" href="{{ route('posts.update', $post) }}/edit">Update</a>
+                            <form action="{{ route('posts.destroy', $post) }}" method="POST" class="max-w-[80px]">
+                                @csrf
+                                @method('DELETE')
+                                <button class="bg-red-200 max-w-[80px] border p-2 font-medium">Delete</button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             @endforeach
         </div>

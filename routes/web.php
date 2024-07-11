@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
+
 //homepage
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -26,11 +27,14 @@ Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.log
 
 
 //posts
+//need to secure the routes!
 // Route::get('/posts', [PostController::class, 'index'])->name('post.index');
-// Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
-// Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+// Route::middleware(['auth:user'])->group(function () {});
+// Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');    
 // Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
-// Route::put('/posts/{id}', [PostController::class, 'update'])->name('post.update');
 // Route::delete('posts/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+// Route::put('/posts/{id}', [PostController::class, 'update'])->name('post.update');
+// Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+
 
 Route::resource('posts', PostController::class);

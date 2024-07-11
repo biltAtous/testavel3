@@ -4,7 +4,7 @@
         <h1 class="text-2xl">Register</h1>
 
 
-        <form method="POST" action="{{ route('register.post') }}" class="flex flex-col gap-2 justify-start">
+        <form method="POST" action="{{ route('admin.register_post') }}" class="flex flex-col gap-2 justify-start">
             @csrf
             <input type="text" name="name" placeholder="Name" required>
             <input type="email" name="email" placeholder="Email" required>

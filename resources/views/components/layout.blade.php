@@ -20,14 +20,17 @@
         <nav class="w-full flex flex-row flex-wrap justify-between p-4 bg-gray-200 my-6">
             <div class="flex flex-row gap-4">
                 <a href="/">Home</a>
-                <a href="/posts">Posts</a>
-                <a href="/posts/create">Add Post</a>
+                @if(Auth::user())
+                    <a href="/posts">Posts</a>
+                    <a href="/posts/create">Add Post</a>
+                @endif
             </div>
             <div>
             @if(Auth::user())
                 <a href="{{ route('admin.logout') }}">Logout</a>
             @else
-                <a href="{{ route('admin.login') }}">Login</a>   
+                <a href="{{ route('admin.login') }}">Login</a>,   
+                <a href="{{ route('admin.register') }}">Register</a>   
             </div>
             @endif
 
