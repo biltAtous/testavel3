@@ -1,16 +1,10 @@
-## personal notes
+## Installation
 
-https://medium.com/@faidfadjri/how-to-setup-laravel-nginx-using-docker-2023-ba9de4b60d04
-<br>
-to build: docker-compose up -d --build
-<br>
-to run: docker-compose up -d
-<br>
-to see container: docker-compose ps
-<br>
-For the permission storage issue (probably not wise in production): <br>
-sudo chmod -Rf 0777 storage
+env <br>
+need a placeholder.png file at storage/app/public if you use the seeder<br>
+docker compose up -d --build<br>
+composer install <br>
+php artisan migrate<br>
+php artisan db:seed<br>
+php artisan storage:link<br>
 
-
-## tailwind
-is in dev mode, without configuration. aka not production ready
