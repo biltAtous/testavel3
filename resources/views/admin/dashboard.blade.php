@@ -9,6 +9,22 @@
         <h2 class="underline text-xl">My posts</h2>    
     
         <table class="table-auto py-8">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Image Path
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
             <tbody>
                 @if(count($posts) > 0)
                     @foreach($posts as $post)

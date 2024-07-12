@@ -20,6 +20,9 @@
             table tr td{
                 padding: 4px;
             }
+            table thead th{
+                text-align:left;
+            }
         </style>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
