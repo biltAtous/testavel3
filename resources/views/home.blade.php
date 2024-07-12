@@ -19,7 +19,7 @@
                             Published: {{ $post->created_at }}
                         </p>
                     </div>
-                    @if(Auth::user())
+                    @if(Auth::user() && Auth::user()->id==$post->user_id)
                         <div class="flex flex-row gap-2">
                             <a class="bg-blue-200 max-w-[80px] border p-2 font-medium" href="{{ route('posts.update', $post) }}/edit">Update</a>
                             <form action="{{ route('posts.destroy', $post) }}" method="POST" class="max-w-[80px]">

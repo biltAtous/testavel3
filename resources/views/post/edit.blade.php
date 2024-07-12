@@ -1,7 +1,15 @@
 <x-layout>
     <section class="flex flex-col gap-4">
         <h1 class="text-xl">Edit Post, id:{{ $post->id }}</h1>
-
+        @if ($errors->any())
+            <div class="bg-red-400">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('posts.update', $post) }}" method="POST" class="flex flex-col justify-start gap-2" enctype="multipart/form-data">
             @csrf
             @method('PUT')

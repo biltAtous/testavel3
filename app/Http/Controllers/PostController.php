@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class PostController extends Controller
 {
     /**
@@ -14,13 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::query()->orderBy('created_at', 'desc')->get();
-
-        foreach($posts as $post){
-            $user = User::find($post->user_id);
-            $post->user = $user;
-        }
-
+        $posts = Post::query()->orderBy('created_at', 'desc')->with('user')->get();
         return view('post.index', ['posts' => $posts]);
     }
 
@@ -40,7 +37,7 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string'],
             'description' => 'string',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240' //10MB
+            'image_path' => 'required|image|mimes:jpeg,png,jpg|max:10240' //10MB
         ]);
         
         $image_file = $request->file('image_path');
@@ -52,7 +49,7 @@ class PostController extends Controller
         $post_data['title'] = $request->title;
         $post_data['description'] = $request->description;
         $post_data['image_path'] = $image_name;
-        $post_data['user_id'] = 1;
+        $post_data['user_id'] = Auth::id();
 
         $new_post = Post::create($post_data);
 
@@ -73,7 +70,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('post.edit', ['post' => $post]);    
+
+        //can only edit their posts
+        if(Auth::user()->id == $post->user_id){
+            return view('post.edit', ['post' => $post]);    
+        }
+        return to_route('home')->with('message', 'Not allowed');
+
     }
 
     /**
@@ -81,10 +84,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
+        //DRY make helper function // todo
         $request->validate([
             'title' => ['required', 'string'],
             'description' => 'string',
-            'image_path' => 'image|mimes:jpeg,png,jpg,gif|max:10240' //10MB
+            'image_path' => 'image|mimes:jpeg,png,jpg|max:10240' //10MB
         ]);
         
         if($request->file('image_path')){
@@ -101,7 +106,7 @@ class PostController extends Controller
 
         $post->update($post_data);
 
-        //todo message if validation is not successful
+        
         return to_route('posts.index', $post)->with('message', 'Updated');
     }
 

@@ -42,7 +42,7 @@ class AdminController extends Controller
             return to_route('home')->with('message', 'Logged in successfully!');
         }
 
-        return to_route('admin.login', $user_object)->with('message', 'Wrong credentials!');
+        return to_route('login', $user_object)->with('message', 'Wrong credentials!');
 
     }
 
@@ -67,7 +67,7 @@ class AdminController extends Controller
         //check if email exists
         $user = User::find($request->email);
         if($user){
-            return to_route('admin.login', $user_object)->with('message', 'Already a user');
+            return to_route('login', $user_object)->with('message', 'Already a user');
         }
         
         $user_object = [];
@@ -77,14 +77,14 @@ class AdminController extends Controller
 
         $user_object = User::create($user_object);
 
-        return to_route('admin.login', $user_object)->with('message', 'User created, please proceed to login!');
+        return to_route('login', $user_object)->with('message', 'User created, please proceed to login!');
     
         
     }
 
     public function logout(Request $request){
         $data = array();
-        // dd();
+
         if(Auth::user()->exists()){
             Auth::logout();
             

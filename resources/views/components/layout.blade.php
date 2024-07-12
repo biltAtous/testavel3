@@ -29,7 +29,7 @@
             @if(Auth::user())
                 <a href="{{ route('admin.logout') }}">Logout</a>
             @else
-                <a href="{{ route('admin.login') }}">Login</a>,   
+                <a href="{{ route('login') }}">Login</a>,   
                 <a href="{{ route('admin.register') }}">Register</a>   
             </div>
             @endif

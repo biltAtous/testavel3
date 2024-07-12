@@ -9,14 +9,7 @@ use App\Models\User;
 class HomeController extends Controller
 {
     public function home(){
-
-        $posts = Post::query()->orderBy('created_at', 'desc')->get();
-
-        foreach($posts as $post){
-            $user = User::find($post->user_id);
-            $post->user = $user;
-        }
-
+        $posts = Post::query()->orderBy('created_at', 'desc')->with('user')->get();
         return view('home', ['posts' => $posts]);
     }
 }

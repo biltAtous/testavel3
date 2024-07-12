@@ -9,22 +9,13 @@ use Illuminate\Support\Facades\Route;
 //homepage
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
-//dashboard
-Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
-
-
-//admin
 //login
-Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::get('/admin/login', [AdminController::class, 'login'])->name('login');
 Route::post('/admin/login', [AdminController::class, 'login_post'])->name('admin.login_post');
 
 //register
 Route::get('/admin/register', [AdminController::class, 'register'])->name('admin.register');
 Route::post('/admin', [AdminController::class, 'register_post'])->name('admin.register_post');
-
-//logout
-Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
 
 //posts
 //need to secure the routes!
@@ -36,5 +27,10 @@ Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.log
 // Route::put('/posts/{id}', [PostController::class, 'update'])->name('post.update');
 // Route::post('/posts', [PostController::class, 'store'])->name('post.store');
 
-
-Route::resource('posts', PostController::class);
+Route::middleware(['auth'])->group(function () {
+    //dashboard
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('posts', PostController::class);
+    //logout
+    Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+});
