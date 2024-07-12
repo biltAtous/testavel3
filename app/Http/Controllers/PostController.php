@@ -53,7 +53,6 @@ class PostController extends Controller
 
         $new_post = Post::create($post_data);
 
-        //todo message if validation is not successful
         return to_route('posts.index', $new_post)->with('message', 'Added');
     }
 

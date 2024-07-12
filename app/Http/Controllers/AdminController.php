@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Post;
 
 class AdminController extends Controller
 {
     
     //dashboard
-    public function dashboard(){
-        return view('admin.dashboard');
+    public function dashboard(Post $post){
+        $user_id = Auth::user()->id;
+        $posts = Post::query()->where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
+        return view('admin.dashboard', ['posts' => $posts] );
     }
     
 

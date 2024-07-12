@@ -9,10 +9,14 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
         <!-- Styles -->
         <style>
-
+            table{
+                border: 1px solid black;
+            }
+            table tr:nth-child(even){
+                background-color: gray;
+            }
         </style>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
@@ -23,6 +27,7 @@
                 @if(Auth::user())
                     <a href="/posts">Posts</a>
                     <a href="/posts/create">Add Post</a>
+                    <a href="/admin">Admin</a>
                 @endif
             </div>
             <div>
