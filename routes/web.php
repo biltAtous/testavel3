@@ -18,7 +18,6 @@ Route::get('/admin/register', [AdminController::class, 'register'])->name('admin
 Route::post('/admin', [AdminController::class, 'register_post'])->name('admin.register_post');
 
 //posts
-//need to secure the routes!
 // Route::get('/posts', [PostController::class, 'index'])->name('post.index');
 // Route::middleware(['auth:user'])->group(function () {});
 // Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');    

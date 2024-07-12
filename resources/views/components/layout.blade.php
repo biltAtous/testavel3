@@ -12,10 +12,13 @@
         <!-- Styles -->
         <style>
             table{
-                border: 1px solid black;
+                border: 2px solid black;
             }
             table tr:nth-child(even){
-                background-color: gray;
+                background-color: lightgray;
+            }
+            table tr td{
+                padding: 4px;
             }
         </style>
         <script src="https://cdn.tailwindcss.com"></script>
