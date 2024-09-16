@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+
+use exception;
+
 
 
 class PostController extends Controller
@@ -17,8 +21,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::query()->orderBy('created_at', 'desc')->with('user')->get();
-        return view('post.index', ['posts' => $posts]);
+        // $posts = Post::query()->orderBy('created_at', 'desc')->with('user')->get();
+        // return view('post.index', ['posts' => $posts]);
+        $posts = Post::all();
+        return response()->json([
+            'data' => $posts,
+            'message' => 'Success'
+        ], JsonResponse::HTTP_OK);
     }
 
     /**
@@ -26,7 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        return view('post.create'); 
     }
 
     /**
@@ -37,23 +46,24 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string'],
             'description' => 'string',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg|max:10240' //10MB
+            // 'image_path' => 'required|image|mimes:jpeg,png,jpg|max:10240' //10MB
         ]);
         
-        $image_file = $request->file('image_path');
-        $image_name = time().'-'.$image_file->getClientOriginalName();
+        // $image_file = $request->file('image_path');
+        // $image_name = time().'-'.$image_file->getClientOriginalName();
 
-        Storage::disk('public')->putFileAs('', $image_file, $image_name);
+        // Storage::disk('public')->putFileAs('', $image_file, $image_name);
         
 
         $post_data['title'] = $request->title;
         $post_data['description'] = $request->description;
-        $post_data['image_path'] = $image_name;
-        $post_data['user_id'] = Auth::id();
+        // $post_data['image_path'] = $image_name;
+        // $post_data['user_id'] = Auth::id();
 
         $new_post = Post::create($post_data);
 
-        return to_route('posts.index', $new_post)->with('message', 'Added');
+        // return to_route('posts.index', $new_post)->with('message', 'Added');
+        return 'ok';
     }
 
     /**
@@ -64,63 +74,63 @@ class PostController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  */
+    // public function edit(Post $post)
+    // {
 
-        //can only edit their posts
-        if(Auth::user()->id == $post->user_id){
-            return view('post.edit', ['post' => $post]);    
-        }
-        return to_route('home')->with('message', 'Not allowed');
+    //     //can only edit their posts
+    //     if(Auth::user()->id == $post->user_id){
+    //         return view('post.edit', ['post' => $post]);    
+    //     }
+    //     return to_route('home')->with('message', 'Not allowed');
 
-    }
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
-    {
+    // /**
+    //  * Update the specified resource in storage.
+    //  */
+    // public function update(Request $request, Post $post)
+    // {
 
-        //DRY make helper function // todo
-        $request->validate([
-            'title' => ['required', 'string'],
-            'description' => 'string',
-            'image_path' => 'image|mimes:jpeg,png,jpg|max:10240' //10MB
-        ]);
+    //     //DRY make helper function // todo
+    //     $request->validate([
+    //         'title' => ['required', 'string'],
+    //         'description' => 'string',
+    //         'image_path' => 'image|mimes:jpeg,png,jpg|max:10240' //10MB
+    //     ]);
         
-        if($request->file('image_path')){
-            $image_file = $request->file('image_path');
-            $image_name = time().'-'.$image_file->getClientOriginalName();
+    //     if($request->file('image_path')){
+    //         $image_file = $request->file('image_path');
+    //         $image_name = time().'-'.$image_file->getClientOriginalName();
     
-            Storage::disk('public')->putFileAs('', $image_file, $image_name);
-            $post_data['image_path'] = $image_name;
-        }
+    //         Storage::disk('public')->putFileAs('', $image_file, $image_name);
+    //         $post_data['image_path'] = $image_name;
+    //     }
         
 
-        $post_data['title'] = $request->title;
-        $post_data['description'] = $request->description;
+    //     $post_data['title'] = $request->title;
+    //     $post_data['description'] = $request->description;
 
-        $post->update($post_data);
+    //     $post->update($post_data);
 
         
-        return to_route('posts.index', $post)->with('message', 'Updated');
-    }
+    //     return to_route('posts.index', $post)->with('message', 'Updated');
+    // }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Post $post)
-    {
-        $file_name = $post->image_path;
+    // /**
+    //  * Remove the specified resource from storage.
+    //  */
+    // public function destroy(Post $post)
+    // {
+    //     $file_name = $post->image_path;
         
-        if(Storage::disk('public')->exists($file_name)){
-            Storage::disk('public')->delete($file_name);
-        }
+    //     if(Storage::disk('public')->exists($file_name)){
+    //         Storage::disk('public')->delete($file_name);
+    //     }
 
-        $post->delete();
-        return to_route('posts.index')->with('message', 'Post was deleted');
-    }
+    //     $post->delete();
+    //     return to_route('posts.index')->with('message', 'Post was deleted');
+    // }
 }

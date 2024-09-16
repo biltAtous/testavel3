@@ -19,8 +19,8 @@ class PostFactory extends Factory
         return [
             'title' => fake()->realText(70),
             'description' =>fake()->realText(120),
-            'image_path' => 'placeholder.png', //hardcoded
-            'user_id' => 1 //hardcoded
+            // 'image_path' => 'placeholder.png', //hardcoded
+            // 'user_id' => 1 //hardcoded
         ];
     }
 }

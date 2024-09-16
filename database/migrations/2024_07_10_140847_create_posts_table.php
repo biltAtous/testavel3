@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
-            $table->string('image_path');
-            $table->foreignId('user_id')->constrained('users'); //added as point 16 asks for author
+            // $table->string('image_path');
+            // $table->foreignId('user_id')->constrained('users'); //added as point 16 asks for author
             $table->timestamps();
         });
     }
